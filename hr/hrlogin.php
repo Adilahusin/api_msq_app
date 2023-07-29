@@ -1,35 +1,37 @@
 <?php
 
+//counselor is not working
+
 include '../connection.php';
 
 //POST = send/save data to mysql database
 //GET = retrieve data from database
 
-$userCsNo = $_POST['cs_no'];
-$userCsPassword = ($_POST['cs_password']);
+$userHrNo = $_POST['hr_no'];
+$userHrPassword = ($_POST['hr_password']);
 
-$sqlQuery = "SELECT * FROM cs_table 
-WHERE cs_no = '$userCsNo' AND cs_password = '$userCsPassword'";
+$sqlQuery = "SELECT * FROM hr_table 
+WHERE hr_no = '$userHrNo' AND hr_password = '$userHrPassword'";
 
 $resultOfQuery = $connectNow->query($sqlQuery);
 
-if($resultOfQuery->num_rows > 0) // allow counselor to login
+if($resultOfQuery->num_rows > 0) // allow hr to login
 {
-    $userCsRecord = array();
+    $userHrRecord = array();
     while($rowFound = $resultOfQuery->fetch_assoc()) // fetch_assoc for fetch a row
     {
-        $userCsRecord[] = $rowFound;
+        $userHrRecord[] = $rowFound;
     }
 
     echo json_encode(
         array(
             "success"=>true,
-            "userCsData"=>$userCsRecord[0],
+            "userHrData"=>$userHrRecord[0],
         ),
     );
 }
 
-else // counselor cannot login
+else // hr cannot login
 {
     echo json_encode(array("success"=>false));
 }
